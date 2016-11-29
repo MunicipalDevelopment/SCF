@@ -1,0 +1,2 @@
+# SCF
+Leaflet-SeeClickFix plugin
