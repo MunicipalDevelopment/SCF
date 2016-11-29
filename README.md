@@ -2,7 +2,7 @@
 
 DMD receives SeeClickFix issues through a third party application. We are interested in grabbing the SeeClickFix data from the source. Instead of a one and done, we decided to write a plugin. This plugin is very basic and may or may not be maintained. It truly depends on what else we may need to do with it. You are free to modify, redistribute or use in any way you see fit.
 
-### Simple Example
+### Example
 ```js
 // Standard Leaflet.js Map with TileLayer
 var map = L.map('map', {
