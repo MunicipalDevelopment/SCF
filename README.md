@@ -27,7 +27,7 @@ removeAll|Removes all markers from the map. Leaves any tile layers
 byID(id)|Select a single issue by ID
 getBySearch(term)|Searches current issues by term
 getRequestTypes(lat,lng,callback)|Get request types at a specific point. Returns JSON.
-getRequestTypeDetails(id)|Get details of a request type using SCF request type id. Returns JSON.
+getRequestTypeDetails(id,callback)|Get details of a request type using SCF request type id. Returns JSON.
 getRequiredQuestions(id,callback)|Get required questions from a request type. Returns array of primary key names.
 
 ### Example
