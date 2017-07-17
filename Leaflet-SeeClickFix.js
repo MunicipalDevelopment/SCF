@@ -12,7 +12,7 @@ L.SCF = L.Class.extend({
 
         url = "https://seeclickfix.com/api/v2/issues?min_lat="+this.options.box[0]+"&min_lng="+this.options.box[1]+"&max_lat="+this.options.box[2]+"&max_lng="+this.options.box[3]+"&per_page=100";
         hold=[];
-      
+
     },
 
 _getData: function(u) {
@@ -101,9 +101,70 @@ http.send();
      getBySearch: function(term) {
       var archurl=url+"&search="+term
       this._getData(archurl);
-    },// end archived
+    },
+
+    getRequestTypes: function(lat,lng,cb) {
+      var http=new XMLHttpRequest();
+      var url="https://seeclickfix.com/api/v2/issues/new?lat="+lat+"&lng="+lng;
+      http.open("GET", url, true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.onreadystatechange = function() {//Call a function when the state changes.
+         if(http.readyState == 4 && http.status == 200) {
+              var d= JSON.parse(http.responseText);
+
+              cb(d);
 
 
+          }//end if
+
+      }
+  http.send();
+
+   },// requesttypes
+   getRequestTypeDetails: function(rtype,cb) {
+     var http=new XMLHttpRequest();
+     var url="https://seeclickfix.com/api/v2/request_types/"+rtype;
+     http.open("GET", url, true);
+     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+             var d= JSON.parse(http.responseText);
+
+             cb(d);
+
+
+         }//end if
+
+     }
+ http.send();
+
+   },
+
+   getRequiredQuestions: function(rtype,cb) {
+     var keys=[];
+
+     var http=new XMLHttpRequest();
+     var url="https://seeclickfix.com/api/v2/request_types/"+rtype;
+     http.open("GET", url, true);
+     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+             var d= JSON.parse(http.responseText);
+             for(var x=0;x<d.questions.length;x++){
+              if(d.questions[x].response_required==true){
+                keys.push(d.questions[x].primary_key); //handle select_values in later version. Or take array of requireds and use requestTypeDetails to find if required has select_values in front end
+
+              }else{}
+            }
+             cb(keys);
+
+
+         }//end if
+
+     }
+   http.send();
+
+   },
 
     byID: function(id) {
 	var UID = "https://seeclickfix.com/api/v2/issues/"+id
@@ -113,18 +174,18 @@ http.send();
    	 http.onreadystatechange = function() {//Call a function when the state changes.
       	 if(http.readyState == 4 && http.status == 200) {
            	 var d= JSON.parse(http.responseText);
-            	
-             
+
+
               var temp = L.circleMarker([d.lat,d.lng],2).bindPopup("<h3>"+d.status+"</h3>"+d.description).addTo(map);
-              
+
 
         }//end if
 
     }
 	http.send();
-     
-	
-	
+
+
+
 
 
 
