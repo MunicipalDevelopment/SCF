@@ -31,8 +31,15 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 var scf = new L.scf({box:[35.02212,-106.79672,35.20636,-106.48911]});
 
 
-scf.getClosed();
+scf.getBySearch("Juan Tabo");
 
+	
+	
+function rt(d){
+    console.log(d);
+}
+	
+scf.getRequestTypes(35.164228, -106.576257,rt)
 
 
 
